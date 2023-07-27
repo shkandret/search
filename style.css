@@ -1,0 +1,55 @@
+body {
+  background-color: #C4C4C4;
+}
+
+.app {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  margin-top: 10%;
+}
+
+.search__input {
+  width: 500px;
+  height: 60px;
+  font-size: 48px;
+  border: 2px solid #000000;
+}
+
+.search__list-item {
+  width: 500px;
+  height: 40px;
+  background-color: #E3E3E3;
+  border: 2px solid #000000;
+  font-size: 30px;
+}
+
+.search__list-item:hover {
+  background-color: #65CDF9;
+}
+
+.repositories__item {
+  position: relative;
+  width: 500px;
+  height: 100px;
+  background-color: #E27BEB;
+  border: 1px solid #000000;
+  font-size: 24px;
+  padding: 10px;
+  margin-top: 16px;
+}
+
+.repositories__item-button {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: -50%;
+  transform: translateY(150%);
+  right: 34px;
+  background: transparent;
+  background-image: url(cross-red.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+}
