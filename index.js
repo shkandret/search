@@ -24,29 +24,48 @@ const deferredGetRepos = debounce(async function getRepos() {
     );
     const responseJson = await response.json();
     repositories = responseJson.items;
-    repositories.forEach((repository, index) => {
-      let fragment = new DocumentFragment();
-      let searchListItem = document.createElement("li");
-      searchListItem.innerText = `${repository.name}`;
-      searchListItem.classList.add("search__list-item");
-      searchListItem.classList.add(`search__list-item${index}`);
-      fragment.append(searchListItem);
-      searchList.append(fragment);
-    });
+    if (repositories !== undefined) {
+      if (repositories.length !== 0) {
+        repositories.forEach((repository, index) => {
+          let documentFragment = new DocumentFragment();
+          let searchListItem = document.createElement("li");
+          searchListItem.innerText = `${repository.name}`;
+          searchListItem.classList.add("search__list-item");
+          searchListItem.classList.add(`search__list-item${index}`);
+          documentFragment.append(searchListItem);
+          searchList.append(documentFragment);
+        });
+      } else {
+        alert("none");
+        searchInput.value = "";
+      }
+    }
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 }, 500);
 
-searchInput.addEventListener("keyup", () => {
+searchInput.addEventListener("input", () => {
+  //
   try {
-    if (searchInput.value[0] !== " " && searchInput.value.length !== 0) {
+    if (
+      searchInput.value[0] !== " " &&
+      searchInput.value.length !== 0 &&
+      !/^([а-яА-ЯёЁ]*)$/.test(searchInput.value)
+    ) {
       deferredGetRepos();
+    } else if (
+      searchInput.value[0] !== " " &&
+      searchInput.value.length !== 0 &&
+      /^([а-яА-ЯёЁ]*)$/.test(searchInput.value)
+    ) {
+      alert("Слава России!!");
+      searchInput.value = "";
     } else {
       searchList.innerHTML = "";
     }
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 });
 
@@ -60,7 +79,7 @@ searchList.addEventListener("click", (elem) => {
     let currentRepository = repositories[targetIndex];
     searchInput.value = "";
     searchList.innerHTML = "";
-    let fragment = new DocumentFragment();
+    let documentFragment = new DocumentFragment();
 
     let repositoriesItem = document.createElement("ul");
     repositoriesItem.innerHTML = `<li>Name: ${currentRepository.name}<br>Owner: ${currentRepository.owner.login}<br>Stars: ${currentRepository.stargazers_count}</li>`;
@@ -68,14 +87,14 @@ searchList.addEventListener("click", (elem) => {
 
     let repositoriesButton = document.createElement("button");
     repositoriesButton.classList.add("repositories__item-button");
-    repositoriesButton.addEventListener('click', () => {
+    repositoriesButton.addEventListener("click", () => {
       repositoriesItem.remove();
-    })
-    
-    fragment.append(repositoriesItem);
+    });
+
+    documentFragment.append(repositoriesItem);
     repositoriesItem.append(repositoriesButton);
-    repositoriesList.append(fragment);
+    repositoriesList.append(documentFragment);
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 });
