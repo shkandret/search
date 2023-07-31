@@ -59,7 +59,7 @@ searchInput.addEventListener("input", () => {
       searchInput.value.length !== 0 &&
       /^([а-яА-ЯёЁ]*)$/.test(searchInput.value)
     ) {
-      alert("Слава России!!");
+      alert("Ошибка");
       searchInput.value = "";
     } else {
       searchList.innerHTML = "";
